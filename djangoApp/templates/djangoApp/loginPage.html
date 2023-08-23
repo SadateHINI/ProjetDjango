@@ -1,0 +1,52 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'djangoApp/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger"> Formulaire de connexion </h2>
+        {% block content%} {% endblock content %}
+    </div>
+        <div class="login_form">
+              <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                  <div class="field">
+                    <label class="label_field">Nom utlisateur</label>
+                    <input type="text" name="username" placeholder="Username" />
+                  </div>
+                  <div class="field">
+                    <label class="label_field"> mot de passe</label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div class="field">
+                    <label class="label_field hidden">hidden label</label>
+                    <a class="forgot" href=" {% url 'inscription' %} "
+                      >voulez-vous creer un compte?</a
+                    >
+                    <a class="forgot" href="">Forgotten Password?</a>
+                  </div>
+                  <div class="field margin_0">
+                    <input
+                      class="btn login_btn "
+                      type="submit"
+                      value="connexion"
+                    />
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+    <script src="{% static 'djangoApp/js/jquery.js' %}"></script>
+    <script src="{% static 'djangoApp/js/bootstrap.js' %}"></script>
+    <script src="{% static 'djangoApp/js/popper.js' %}"></script>
+</body>
+</html>
