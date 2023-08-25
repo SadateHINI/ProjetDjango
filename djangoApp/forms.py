@@ -1,6 +1,8 @@
 from django import forms
+from django.contrib.auth import login
+from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
-from .models import User 
+from .models import User, Filiere, Matiere,Projet,Devoir
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -53,3 +55,28 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2',
                   'is_administrateur', 'is_etudiant', 'is_enseignat','numero')
+        
+class MatieresCheckboxSelect(forms.CheckboxSelectMultiple):
+    def label_from_instance(self, matiere):
+        return matiere.nomMatiere
+
+class FiliereForm(forms.ModelForm):
+    matieres = forms.ModelMultipleChoiceField(
+        queryset=Matiere.objects.all(),
+        widget=MatieresCheckboxSelect,
+        label="Matieres associées"
+    )
+    class Meta:
+        model = Filiere
+        fields = ['nomFiliere', 'matieres']
+
+class ProjetForm(forms.ModelForm):
+    class Meta:
+        model=Projet
+        fields=['matiere', 'intituleProjet', 'fichierProjet', 'description','deadline']
+
+
+class DevoirForm(forms.ModelForm):
+    class Meta:
+        model = Devoir
+        fields = ['fichier_soumis', 'commentaires']

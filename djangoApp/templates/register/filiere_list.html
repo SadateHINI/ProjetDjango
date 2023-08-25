@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des matieres</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger"> Liste des matieres  </h2>
+    </div>
+
+    {% block content %}
+    <h1>Liste des filières</h1>
+    <ul>
+      {% for filiere in filieres %}
+        <li>
+          {{ filiere.nomFiliere }}
+          Matières :
+          <ul>
+            {% for matiere in filiere.matieres.all %}
+              <li>{{ matiere.nomMatiere }}</li>
+            {% endfor %}
+          </ul>
+          <a href="{% url 'filiere-update' filiere.pk %}">Modifier</a>
+          <a href="{% url 'filiere-delete' filiere.pk %}">Supprimer</a>
+        </li>
+      {% endfor %}
+         <a href="{% url 'filiere-create' %}">Ajouter </a>
+    </ul>
+  {% endblock %}
+
+
+</body>
+</html>
