@@ -187,12 +187,17 @@ def registerEnseignantFunction(request):
         form = SignUpFormEnseignant(request.POST)
         if form.is_valid():
             user = form.save()
+            matieres_selected = form.cleaned_data['matiere_enseignant']
+            user.save()  # Sauvegarder l'utilisateur pour obtenir un ID utilisateur
+            
+            # Ajouter les matières associées à l'utilisateur
+            user.matiere_enseignant.set(matieres_selected)
             msg = 'user created'
             return redirect('login')
         else:
             msg = 'form is not valid'
     else:
-        form = SignUpForm()
+        form = SignUpFormEnseignant()
     return render(request, 'djangoApp/register_enseignant.html', {'form': form, 'msg': msg})
 
 

@@ -124,11 +124,11 @@ class SignUpFormEnseignant(UserCreationForm):
     #     required=False  # Si vous voulez que ce champ ne soit pas obligatoire
     # )
 
-    matiere_enseignant = forms.ModelMultipleChoiceField(
-        queryset=Matiere.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        label="Matieres associées"
-    )
+    # matiere_enseignant = forms.ModelMultipleChoiceField(
+    #     queryset=Matiere.objects.all(),
+    #     widget=forms.CheckboxSelectMultiple,
+    #     label="Matieres associées"
+    # )
     
 
     is_enseignat = forms.BooleanField(initial=True, required=True, widget=forms.HiddenInput)

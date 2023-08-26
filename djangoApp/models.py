@@ -29,14 +29,13 @@ def validate_file_size(value):
 
 class Matiere(models.Model):
     nomMatiere=models.CharField(max_length=3000)
-
+    
     def __str__(self):
      return self.nomMatiere
 
 class Filiere(models.Model):
-    matieres=models.ManyToManyField(Matiere)
     nomFiliere=models.CharField(max_length=3000)
-    
+    matieres = models.ManyToManyField(Matiere)
 
     def __str__(self):
      return self.nomFiliere
@@ -49,6 +48,10 @@ class User(AbstractUser):
     is_administrateur = models.BooleanField(null=True)
     filire_etudiant = models.ForeignKey(Filiere, null=True, on_delete=models.SET_NULL)
     matiere_enseignant = models.ManyToManyField(Matiere)
+
+    def __str__(self):
+     return self.username
+
 
 class Projet(models.Model):
     # etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE, null=True,)
