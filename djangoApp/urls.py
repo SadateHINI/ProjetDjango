@@ -14,7 +14,12 @@ urlpatterns = [
     path('adminpage/', views.admin, name='adminpage'),
     path('etudiant/', views.etudiant, name='etudiantPage'),
     path('enseignant/', views.enseignant, name='enseignant'),
+    path('liste/', views.liste_matiere ,name='liste_des_matiere'),
+    path('register/enseignant', views.registerEnseignantFunction, name="registerEnseignant"),
+    path('register/etudiant', views.registerEtudiantFunction, name="registerEtudiant"),
+    path('register/admin', views.registerAdminFunction, name="registerEtudiant"),
     # Matiere URL
+
     path('matiere/create/', MatiereCreateView.as_view(), name='matiere-create'),
     path('matiere/<int:pk>/update/', MatiereUpdateView.as_view(), name='matiere-update'),
     path('matiere/<int:pk>/delete/', MatiereDeleteView.as_view(), name='matiere-delete'),
@@ -32,6 +37,8 @@ urlpatterns = [
     path('projet/<int:pk>/download/', ProjetDownloadView.as_view(), name='projet-download'),
     path('projet/soumission/', views.soummission, name='projet-soumission'),
     path('projet/<int:pk>/show/', ProjetShowView, name='projet-show'),
+  
+
 
 ]
 

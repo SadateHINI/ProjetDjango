@@ -8,8 +8,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView,View
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
-from .models import Matiere, Filiere,Projet,Devoir,Etudiant
-from .forms import FiliereForm,ProjetForm,DevoirForm
+from .models import Matiere, Filiere,Projet,Devoir,Matieretest
+from .forms import FiliereForm,ProjetForm,DevoirForm,SignUpFormEnseignant,SignUpFormEtudiant,SignUpFormAdimin
 # Create your views here.
 
 
@@ -144,9 +144,8 @@ class ProjetDownloadView(View):
 def ProjetShowView(request, pk):
     projet = get_object_or_404(Projet, pk=pk)
     devoir_form = DevoirForm(request.POST or None, request.FILES or None)
-    
     if request.method == 'POST':
-        Etudiant.nomEtudiant = request.user.username
+        # Etudiant.nomEtudiant = request.user.username
         if devoir_form.is_valid():
             devoir = devoir_form.save(commit=False)
             devoir.etudiant=request.user  # L'étudiant actuellement connecté
@@ -160,7 +159,12 @@ def ProjetShowView(request, pk):
     }
     return render(request, 'register/projet_show.html', context)
 
-
+def liste_matiere(request):
+    liste = Matieretest.objects.all().values()
+    context = {
+        'listes':liste
+    }
+    return render(request , 'register/liste_matiere.html', context)
 
 def soummission(request):
     return render(request, 'register/projet_soumission.html')
@@ -175,3 +179,49 @@ def etudiant(request):
 
 def enseignant(request):
     return render(request, 'djangoApp/profile.html')
+
+
+def registerEnseignantFunction(request):
+    msg = None
+    if request.method == 'POST':
+        form = SignUpFormEnseignant(request.POST)
+        if form.is_valid():
+            user = form.save()
+            msg = 'user created'
+            return redirect('login')
+        else:
+            msg = 'form is not valid'
+    else:
+        form = SignUpForm()
+    return render(request, 'djangoApp/register_enseignant.html', {'form': form, 'msg': msg})
+
+
+def registerEtudiantFunction(request):
+    msg = None
+    if request.method == 'POST':
+        form = SignUpFormEtudiant(request.POST)
+        if form.is_valid():
+            user = form.save()
+            msg = 'user created'
+            return redirect('login')
+        else:
+            msg = 'form is not valid'
+    else:
+        form = SignUpForm()
+    return render(request, 'djangoApp/register_etudiant.html', {'form': form, 'msg': msg})
+
+
+def registerAdminFunction(request):
+    msg = None
+    if request.method == 'POST':
+        form = SignUpFormAdimin(request.POST)
+        if form.is_valid():
+            user = form.save()
+            msg = 'user created'
+            return redirect('login')
+        else:
+            msg = 'form is not valid'
+    else:
+        form = SignUpForm()
+    return render(request, 'djangoApp/register_admin.html', {'form': form, 'msg': msg})
+

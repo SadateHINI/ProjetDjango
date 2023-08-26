@@ -31,29 +31,16 @@
               {{ form.password2 }}
             </div>
           </div>
-          <div class="field">
-            <label class="label_field">Administrateur</label>
-            {{ form.is_administrateur }}
-          </div>
-          <div class="field">
-            <label class="label_field">etudiant</label>
-            {{ form.is_etudiant }}
-          </div>
-          <div class="field">
-            <label class="label_field">Enseignant</label>
-            {{ form.is_enseignat }}
+          <div class="field" style="display: none;">
+            <label class="label_field">Etudiant</label>
+            {{ form.is_etudiant}}
           </div>
           <div class="field">
             <label class="label_field">Numero</label>
             {{ form.numero }}
-          </div>
-          <div class="field">
-            <label class="label_field">Filiere</label>
-            {{ form.filire_etudiant }}
-          </div>
           <div class="field">
             <label class="label_field">Matiere</label>
-            {{ form.matiere_enseignant }}
+            {{ form.filire_etudiant }}
           </div>
           </div>
           <div class="field">

@@ -16,7 +16,7 @@
         {% csrf_token %}
         <fieldset>
           <div class="field">
-            <label class="label_field">Nom utilisateur</label>
+            <label class="label_field">Nom enseignant</label>
             {{ form.username }}
           </div>
           <div class="field">
@@ -31,30 +31,30 @@
               {{ form.password2 }}
             </div>
           </div>
-          <div class="field">
-            <label class="label_field">Administrateur</label>
-            {{ form.is_administrateur }}
-          </div>
-          <div class="field">
-            <label class="label_field">etudiant</label>
-            {{ form.is_etudiant }}
-          </div>
-          <div class="field">
+          <div class="field" style="display: none;">
             <label class="label_field">Enseignant</label>
             {{ form.is_enseignat }}
           </div>
           <div class="field">
             <label class="label_field">Numero</label>
             {{ form.numero }}
-          </div>
-          <div class="field">
-            <label class="label_field">Filiere</label>
-            {{ form.filire_etudiant }}
-          </div>
-          <div class="field">
+
+            <div class="field">
+                <label class="label_field">Matiere</label>
+                {% for choice in form.matiere_enseignant.field.choices %}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="{{ form.matiere_enseignant.name }}" value="{{ choice.0 }}">
+                            {{ choice.1 }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            
+          <!-- <div class="field">
             <label class="label_field">Matiere</label>
             {{ form.matiere_enseignant }}
-          </div>
+          </div> -->
           </div>
           <div class="field">
             <a class="forgot" href="{% url 'login' %}"
@@ -63,7 +63,6 @@
           </div>
           {{ form.errors }}
           <div class="field margin_0">
-            <label class="label_field hidden">hidden label</label>
             <button class="main_bt">S'inscrire</button>
           </div>
         </fieldset>
@@ -74,3 +73,5 @@
       <script src="{% static 'djangoApp/js/popper.js' %}"></script>
 </body>
 </html>
+
+
