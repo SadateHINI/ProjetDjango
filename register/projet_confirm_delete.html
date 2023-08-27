@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de suppression </title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger"> Confirmation de suppression  </h2>    
+    </div>
+    
+    {% block content %}
+        <h1>Confirmer la suppression du projet</h1>
+        <p>Êtes-vous sûr de vouloir supprimer ce projet ?</p>
+        <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmer la suppression</button>
+        </form>
+    {% endblock %}
+
+    
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des matieres</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger"> Liste des matieres  </h2>
+    </div>
+
+    
+  
+    {% block content %}
+        <h1>Liste des cours</h1>
+        <ul>
+        {% for cour in cour_list %}
+            <li>
+                <a href="{% url 'cour-show' cour.pk %}">  {{ cour.intituleCour }}</a>
+          
+            <a href="{% url 'cour-update' cour.pk %}">Modifier</a>
+            <a href="{% url 'cour-delete' cour.pk %}">Supprimer</a>
+            <a href="{% url 'cour-download' cour.pk %}">Télécharger</a>
+            <!-- <a href="{% url 'cour-show' cour.pk %}">Voir détails</a> -->
+            </li>
+        {% endfor %}
+            <a href="{% url 'cour-create' %}">Ajouter </a>
+        </ul>
+    {% endblock %}
+
+
+</body>
+</html>

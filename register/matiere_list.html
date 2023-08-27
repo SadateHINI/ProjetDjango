@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des matieres</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger"> Liste des matieres  </h2>
+    </div>
+
+    
+    {% block content %}
+        <h1>Liste des matières</h1>
+        <ul>
+        {% for matiere in matieres %}
+            <li>
+            {{ matiere.nomMatiere }}
+            <a href="{% url 'matiere-update' matiere.pk %}">Modifier</a>
+            <a href="{% url 'matiere-delete' matiere.pk %}">Supprimer</a>
+            </li>
+        {% endfor %}
+             <a href="{% url 'matiere-create' %}">Ajouter </a>
+        </ul>
+    {% endblock %}
+
+
+</body>
+</html>
