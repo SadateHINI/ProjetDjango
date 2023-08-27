@@ -1,0 +1,9 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+{% for matiere in liste_matiere %}
+            <li>{{ matiere.nomMatiere }}</li>
+        {% endfor %}
+{% endblock  %}

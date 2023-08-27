@@ -1,0 +1,43 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+ 
+<section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+            </h3>
+            <p>
+            </p>
+            <a href="">
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+  
+            </h5>
+            {% block content %}
+            <h1>Ajouter ou mettre à jour un cour</h1>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Enregistrer</button>
+            </form>
+          {% endblock %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end login section -->
+
+  <!-- end event section -->
+{% endblock  %}

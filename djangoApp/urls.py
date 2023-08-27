@@ -2,8 +2,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from .views import MatiereCreateView, MatiereUpdateView, MatiereDeleteView, MatiereListView
-from .views import FiliereCreateView, FiliereUpdateView, FiliereDeleteView, FiliereListView
+from .views import MatiereCreateView, MatiereUpdateView, MatiereDeleteView, MatiereListView,DevoirDownloadView,DevoirListView
+from .views import FiliereCreateView, FiliereUpdateView, FiliereDeleteView, FiliereListView,CourListViewEtudiant,ProjetListViewEtuduant
+from .views import CourCreateView, CourUpdateView, CourDeleteView, CourListView, CourDeleteView,CourDownloadView,CourShowView
 from .views import ProjetCreateView, ProjetUpdateView, ProjetListView, ProjetDeleteView,ProjetDownloadView,ProjetShowView
 from djangoApp import views
 urlpatterns = [
@@ -12,12 +13,14 @@ urlpatterns = [
     # path('inscription/', views.register, name='inscription'),
     path('login/', views.loginFunction, name='login'),
     path('adminpage/', views.admin, name='adminpage'),
-    path('etudiant/', views.etudiant, name='etudiantPage'),
+    path('etudiant/', views.etudiantPage, name='etudiantPage'),
+    path('enseignantMatiere/', views.listeMatiereEnseignant, name='enseignantMatiere'),
     path('enseignant/', views.enseignant, name='enseignant'),
     path('liste/', views.liste_matiere ,name='liste_des_matiere'),
     path('register/enseignant', views.registerEnseignantFunction, name="registerEnseignant"),
     path('register/etudiant', views.registerEtudiantFunction, name="registerEtudiant"),
-    path('register/admin', views.registerAdminFunction, name="registerEtudiant"),
+    path('', views.registerAdminFunction, name="registerAdmin"),
+    path('liste_enseignants/', views.liste_enseignants, name='liste_enseignants'),
     # Matiere URL
 
     path('matiere/create/', MatiereCreateView.as_view(), name='matiere-create'),
@@ -35,10 +38,29 @@ urlpatterns = [
     path('projet/list/', ProjetListView.as_view(), name='projet-list'),
     path('projet/<int:pk>/delete/', ProjetDeleteView.as_view(), name='projet-delete'),
     path('projet/<int:pk>/download/', ProjetDownloadView.as_view(), name='projet-download'),
-    path('projet/soumission/', views.soummission, name='projet-soumission'),
+    path('devoir/<int:pk>/download/', DevoirDownloadView.as_view(), name='devoir-download'),
+    path('projet/soumission/',  DevoirListView.as_view(), name='projet-soumission'),
     path('projet/<int:pk>/show/', ProjetShowView, name='projet-show'),
+    # Cour URL
+    path('cour/create/', CourCreateView.as_view(), name='cour-create'),
+    path('cour/<int:pk>/update/', CourUpdateView.as_view(), name='cour-update'),
+    path('cour/list/', CourListView.as_view(), name='cour-list'),
+    path('cour/<int:pk>/delete/', CourDeleteView.as_view(), name='cour-delete'),
+    path('cour/<int:pk>/download/', CourDownloadView.as_view(), name='cour-download'),
+    path('cour/<int:pk>/show/', CourShowView, name='cour-show'),
   
+    # Etudiant
+    path('cour_list_etudiant', CourListViewEtudiant.as_view(), name='cour_list_etudiant'),
+    path('projet_list_etudiant', ProjetListViewEtuduant.as_view(), name='projet_list_etudiant'),
 
+
+
+    path('testAdmin/', views.testAdmin, name='testAdmin'),
+    path('testEnseignant/', views.testEnseignant, name='testEnseignant'),
+
+    path('AdminAcceuil/', views.AdminAcceuil, name='AdminAcceuil'),
+    path('EnseignantAcceuil/', views.EnseignantAcceuil, name='EnseignantAcceuil'),
+    path('EtudiantAcceuil/', views.EtudiantAcceuil, name='EtudiantAcceuil'),
 
 ]
 

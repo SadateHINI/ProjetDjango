@@ -1,0 +1,77 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+<section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+          
+            </h3>
+            <p>
+    
+    
+            </p>
+            <a href="">
+          
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+
+            </h5>
+               <form method="POST" action="">
+                  {% csrf_token %}
+                  <fieldset>
+                    <div class="field">
+                      <label class="label_field">Nom utilisateur</label>
+                      {{ form.username }}
+                    </div>
+                    <div class="field">
+                      <label class="label_field">Email</label>
+                      {{ form.email }}
+                      <div class="field">
+                        <label class="label_field">password</label>
+                        {{ form.password1 }}
+                      </div>
+                      <div class="field">
+                        <label class="label_field">password conf</label>
+                        {{ form.password2 }}
+                      </div>
+                    </div>
+                    <div class="field" style="display: none;">
+                      <label class="label_field">Etudiant</label>
+                      {{ form.is_etudiant}}
+                    </div>
+                    <div class="field">
+                      <label class="label_field">Numero</label>
+                      {{ form.numero }}
+                    <div class="field">
+                      <label class="label_field">Filiere</label>
+                      {{ form.filire_etudiant }}
+                    </div>
+                    </div>
+                    <div class="field">
+                      <a class="forgot" href="{% url 'login' %}"
+                        >avez-vous un compte?</a
+                      >
+                    </div>
+                    {{ form.errors }}
+                    <div class="field margin_0">
+                      <button class="main_bt">S'inscrire</button>
+                    </div>
+                  </fieldset>
+                </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock  %}

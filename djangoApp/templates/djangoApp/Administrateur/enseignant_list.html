@@ -1,0 +1,12 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+    <h1>Liste des Enseignants</h1>
+    <ul>
+        {% for enseignant in enseignants %}
+            <li>{{ enseignant.first_name }} {{ enseignant.last_name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock  %}

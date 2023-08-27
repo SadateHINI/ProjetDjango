@@ -1,58 +1,75 @@
-{% load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enregistrement </title>
-    <link rel="stylesheet" type="text/css" href="{% static 'djangoApp/css/bootstrap.css' %}">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center alert alert-danger"> Formulaire d'enregistrement </h2>
-        {% block content%} {% endblock content %}
-    </div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        <fieldset>
-          <div class="field">
-            <label class="label_field">Nom utilisateur</label>
-            {{ form.username }}
-          </div>
-          <div class="field">
-            <label class="label_field">Email</label>
-            {{ form.email }}
-            <div class="field">
-              <label class="label_field">password</label>
-              {{ form.password1 }}
-            </div>
-            <div class="field">
-              <label class="label_field">password conf</label>
-              {{ form.password2 }}
-            </div>
-          </div>
-          <div class="field" style="display: none;">
-            <label class="label_field">Administrateur</label>
-            {{ form.is_administrateur}}
-          </div>
-          <div class="field">
-            <label class="label_field">Numero</label>
-            {{ form.numero }}
-          <div class="field">
-            <a class="forgot" href="{% url 'login' %}"
-              >avez-vous un compte?</a
-            >
-          </div>
-          {{ form.errors }}
-          <div class="field margin_0">
-            <label class="label_field hidden">hidden label</label>
-            <button class="main_bt">S'inscrire</button>
-          </div>
-        </fieldset>
-      </form>
+{% extends 'template.html' %}
 
-      <script src="{% static 'djangoApp/js/jquery.js' %}"></script>
-      <script src="{% static 'djangoApp/js/bootstrap.js' %}"></script>
-      <script src="{% static 'djangoApp/js/popper.js' %}"></script>
-</body>
-</html>
+
+
+{% block main_content %}
+
+
+<section class="login_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="detail-box">
+          <h3>
+            GET ONLINE COURSES FOR FREE
+          </h3>
+          <p>
+            Create your free account now and get immediate access to 100s of
+            online courses
+          </p>
+          <a href="">
+            Formulaire enseignant
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="login_form">
+          <h5>
+            Login Now
+          </h5>
+           <form method="POST" action="">
+                {% csrf_token %}
+               <fieldset>
+                  <div class="field">
+                    <label class="label_field">Nom utilisateur</label>
+                    {{ form.username }}
+                  </div>
+                  <div class="field">
+                    <label class="label_field">Email</label>
+                    {{ form.email }}
+                    <div class="field">
+                      <label class="label_field">password</label>
+                      {{ form.password1 }}
+                    </div>
+                    <div class="field">
+                      <label class="label_field">password conf</label>
+                      {{ form.password2 }}
+                    </div>
+                  </div>
+                  <div class="field" style="display: none;">
+                    <label class="label_field">Administrateur</label>
+                    {{ form.is_administrateur}}
+                  </div>
+                  <div class="field">
+                    <label class="label_field">Numero</label>
+                    {{ form.numero }}
+                  <div class="field">
+                    <a class="forgot" href="{% url 'login' %}"
+                      >avez-vous un compte?</a
+                    >
+                  </div>
+                  {{ form.errors }}
+                  <div class="field margin_0">
+                    <label class="label_field hidden">hidden label</label>
+                    <button class="main_bt">S'inscrire</button>
+                  </div>
+                </fieldset>
+             </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock  %}

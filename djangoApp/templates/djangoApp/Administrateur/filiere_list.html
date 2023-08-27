@@ -1,0 +1,45 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+    
+  <!-- event section -->
+  <section class="event_section layout_padding">
+    {% block content %}
+      <div class="container">
+        <div class="heading_container">
+          <h3>
+          
+          </h3>
+
+          </p>
+        </div>
+        {% for filiere in filieres %}
+
+        <div class="event_container">
+          <div class="box">
+               <li>
+          {{ filiere.nomFiliere }}
+          Matières :
+          <ul>
+            {% for matiere in filiere.matieres.all %}
+              <li>{{ matiere.nomMatiere }}</li>
+            {% endfor %}
+          </ul>
+          <a href="{% url 'filiere-update' filiere.pk %}">Modifier</a>
+          <a href="{% url 'filiere-delete' filiere.pk %}">Supprimer</a>
+        </li>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="btn-box">
+          <a href="{% url 'filiere-create' %}">Ajouter </a>
+          </a>
+        </div>
+      </div>
+    {% endblock %}
+  </section>
+
+  <!-- end event section -->
+{% endblock  %}

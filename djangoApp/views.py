@@ -8,8 +8,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView,View
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
-from .models import Matiere, Filiere,Projet,Devoir,Matieretest
-from .forms import FiliereForm,ProjetForm,DevoirForm,SignUpFormEnseignant,SignUpFormEtudiant,SignUpFormAdimin
+from .models import Matiere, Filiere,Projet,Devoir,Matieretest,Cour,User,Devoir
+from .forms import FiliereForm,ProjetForm,DevoirForm,SignUpFormEnseignant,SignUpFormEtudiant,SignUpFormAdimin,CourForm
 # Create your views here.
 
 
@@ -42,41 +42,54 @@ def loginFunction(request):
             user = authenticate(username=username, password=password)
             if user is not None and user.is_administrateur:
                 login(request, user)
-                return redirect('adminpage')
-            # elif user is not None and user.is_etudiant:
-            #     login(request, user)
-            #     return redirect('etudiantPage')
-            elif user is not None and user.is_enseignat:
+                return redirect('AdminAcceuil')
+            elif user is not None and user.is_etudiant:
+                filiere_etudiant = user.filire_etudiant_id
+                matieres_associées = Matiere.objects.filter(filiere__id=filiere_etudiant)
+                # matieres_associées = Matiere.objects.filter(filiere_matieres__filiere_id=filiere_etudiant)
+                context = {
+                    'liste_matiere':matieres_associées
+                }
                 login(request, user)
-                return redirect('enseignant')
+                return render(request,'djangoApp/Administrateur/Acceuil_etudiant.html', context)
+            elif user is not None and user.is_enseignat:
+                id_enseignant  = user.id
+                matieres_associées = Matiere.objects.filter(user__id=id_enseignant)
+                context = {
+                    'liste_matiere':matieres_associées
+                }
+                login(request, user)
+                return render(request,'djangoApp/Administrateur/Acceuil_enseignant.html', context)
             else:
                 msg = 'invalid credentials'
         else:
             msg = 'error validating form'
     return render(request, 'djangoApp/loginPage.html', {'form': form, 'msg': msg})
 
+def etudiantPage(request):
+    return render(request, 'djangoApp/dashBordEtudiant.html')
 
 # MATIERE CRUD
 class MatiereCreateView(CreateView):
     model=Matiere
     fields=['nomMatiere']
-    template_name='register/matiere_form.html'
+    template_name='djangoApp/Administrateur/matiere_form.html'
     success_url=reverse_lazy('matiere-list')
 
 class MatiereUpdateView(UpdateView):
     model=Matiere
     fields = ['nomMatiere']
-    template_name = 'register/matiere_form.html'
+    template_name = 'djangoApp/Administrateur/matiere_form.html'
     success_url= reverse_lazy('matiere-list')
 
 class MatiereDeleteView(DeleteView):
     model = Matiere
-    template_name='register/matiere_confirm_delete.html'
+    template_name='djangoApp/Administrateur/matiere_confirm_delete.html'
     success_url = reverse_lazy('matiere-list')
 
 class MatiereListView(ListView):
     model = Matiere
-    template_name= 'register/matiere_list.html'
+    template_name= 'djangoApp/Administrateur/matiere_list.html'
     context_object_name='matieres'
 
 
@@ -85,52 +98,102 @@ class FiliereCreateView(CreateView):
     model=Filiere
     form_class = FiliereForm
     # fields=['nomFiliere','matieres']
-    template_name='register/filiere_form.html'
+    template_name='djangoApp/Administrateur/filiere_form.html'
     success_url=reverse_lazy('filiere-list')
 
 class FiliereUpdateView(UpdateView):
     model=Filiere
     form_class = FiliereForm
     # fields = ['nomFiliere','matieres']
-    template_name = 'register/filiere_form.html'
+    template_name = 'djangoApp/Administrateur/filiere_form.html'
     success_url= reverse_lazy('filiere-list')
 
 class FiliereDeleteView(DeleteView):
     model = Filiere
-    template_name='register/filiere_confirm_delete.html'
+    template_name='djangoApp/Administrateur/filiere_confirm_delete.html'
     success_url = reverse_lazy('filiere-list')
 
 class FiliereListView(ListView):
     model = Filiere
-    template_name= 'register/filiere_list.html'
+    template_name= 'djangoApp/Administrateur/filiere_list.html'
     context_object_name='filieres'
 
 # PROJET CRUD
 class ProjetCreateView(CreateView):
     model = Projet
     form_class = ProjetForm
-    template_name = 'register/projet_form.html'
+    template_name = 'djangoApp/Administrateur/projet_form.html'
     success_url = reverse_lazy('projet-list')
 
 class ProjetUpdateView(UpdateView):
     model = Projet
     form_class = ProjetForm
-    template_name = 'register/projet_form.html'
+    template_name = 'djangoApp/Administrateur/projet_form.html'
     success_url = reverse_lazy('projet-list')
 
 class ProjetListView(ListView):
     model = Projet
-    template_name = 'register/projet_list.html'
+    template_name = 'djangoApp/Administrateur/projet_list.html'
 
 class ProjetDeleteView(DeleteView):
     model = Projet
-    template_name = 'register/projet_confirm_delete.html'
+    template_name = 'djangoApp/Administrateur/projet_confirm_delete.html'
     success_url = reverse_lazy('projet-list')
+
+# class ProjetSoumission(ListView):
+#     model = Devoir
+#     template_name = 'djangoApp/Administrateur/projet_soumission.html'
+
+class DevoirListView(ListView):
+    model = Projet
+    template_name = 'djangoApp/Administrateur/projet_soumission.html'
+
+class DevoirDownloadView(View):
+    def get(self, request, pk):
+        devoir = get_object_or_404(Devoir, pk=pk)
+        return FileResponse(devoir.fichier_soumis)
 
 class ProjetDownloadView(View):
     def get(self, request, pk):
         projet = get_object_or_404(Projet, pk=pk)
         return FileResponse(projet.fichierProjet)
+
+# COURS CRUD
+
+class CourCreateView(CreateView):
+    model = Cour
+    form_class = CourForm
+    template_name = 'djangoApp/Administrateur/cour_form.html'
+    success_url = reverse_lazy('cour-list')
+
+class CourUpdateView(UpdateView):
+    model = Cour
+    form_class = CourForm
+    template_name = 'djangoApp/Administrateur/cour_form.html'
+    success_url = reverse_lazy('cour-list')
+
+class CourListView(ListView):
+    model = Cour
+    template_name = 'djangoApp/Administrateur/cour_list.html'
+
+class CourDeleteView(DeleteView):
+    model = Cour
+    template_name = 'djangoApp/Administrateur/cour_confirm_delete.html'
+    success_url = reverse_lazy('cour-list')
+
+class CourDownloadView(View):
+    def get(self, request, pk):
+        cour = get_object_or_404(Cour, pk=pk)
+        return FileResponse(cour.fichierCour)
+    
+def CourShowView(request, pk):
+    cour = get_object_or_404(Cour, pk=pk)
+    model =Cour
+    context = {
+        'cour': cour,
+    }
+    
+    return render(request, 'djangoApp/Administrateur/cour_show.html', context)
 
 
 # class ProjetShowView(View):
@@ -157,29 +220,29 @@ def ProjetShowView(request, pk):
         'projet': projet,
         'devoir_form': devoir_form,
     }
-    return render(request, 'register/projet_show.html', context)
+    return render(request, 'djangoApp/Administrateur/projet_show.html', context)
 
 def liste_matiere(request):
     liste = Matieretest.objects.all().values()
     context = {
         'listes':liste
     }
-    return render(request , 'register/liste_matiere.html', context)
+    return render(request , 'djangoApp/Administrateur/liste_matiere.html', context)
 
 def soummission(request):
-    return render(request, 'register/projet_soumission.html')
+    return render(request, 'djangoApp/Administrateur/projet_soumission.html')
 
 def admin(request):
-    return render(request, 'djangoApp/index.html')
-
+    return render(request, 'djangoApp/Administrateur/dashBoardAdmin.html')
 
 def etudiant(request):
-    return render(request, 'djangoApp/login.html')
-
+    return render(request, 'djangoApp/dashBordEtudiant.html')
 
 def enseignant(request):
-    return render(request, 'djangoApp/profile.html')
+    return render(request, 'djangoApp/dashBordEnseignant.html')
 
+def listeMatiereEnseignant(request):
+    return render(request,'djangoApp/Enseignant/listeMatiereEnseignant.html')
 
 def registerEnseignantFunction(request):
     msg = None
@@ -230,3 +293,35 @@ def registerAdminFunction(request):
         form = SignUpForm()
     return render(request, 'djangoApp/register_admin.html', {'form': form, 'msg': msg})
 
+
+def liste_enseignants(request):
+    enseignants = User.objects.filter(is_enseignant=True)
+    context = {'enseignants': enseignants}
+    return render(request, 'liste_enseignants.html', context)
+
+
+def testAdmin(request):
+    return render(request, 'djangoApp/Administrateur/test.html')
+
+def testEnseignant(request):
+    return render(request, 'djangoApp/Enseignant/test.html')
+
+
+
+
+def AdminAcceuil(request):
+    return render(request, 'djangoApp/Administrateur/Acceuil_admin.html')
+def EnseignantAcceuil(request):
+    return render(request, 'djangoApp/Administrateur/Acceuil_enseignant.html')
+def EtudiantAcceuil(request):
+    return render(request, 'djangoApp/Administrateur/Acceuil_etudiant.html')
+
+
+class ProjetListViewEtuduant(ListView):
+    model = Projet
+    template_name = 'djangoApp/projet_list_etudiant.html'
+
+
+class CourListViewEtudiant(ListView):
+    model = Cour
+    template_name = 'djangoApp/cour_liste_etudiant.html'

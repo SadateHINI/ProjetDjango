@@ -1,0 +1,64 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+<section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+  
+            </h3>
+            <p>
+
+            </p>
+            <a href="">
+     
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+            
+            </h5>
+             <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                  <div class="field">
+                    <label class="label_field">Nom utlisateur</label>
+                    <input type="text" name="username" placeholder="Username" />
+                  </div>
+                  <div class="field">
+                    <label class="label_field"> mot de passe</label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div class="field">
+                    <label class="label_field hidden">hidden label</label>
+                    <a class="forgot" href="#"
+                      >voulez-vous creer un compte?</a
+                    >
+                    <a class="forgot" href="">Forgotten Password?</a>
+                  </div>
+                  <div class="field margin_0">
+                    <input
+                      class="btn login_btn "
+                      type="submit"
+                      value="connexion"
+                    />
+                  </div>
+                </fieldset>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock  %}

@@ -1,0 +1,37 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+    <section class="event_section layout_padding">
+        
+        <div class="container">
+        <div class="heading_container">
+            <h3>
+            </h3>
+            <p>
+       
+            </p>
+        </div>
+        {% for cour in cour_list %}
+        <div class="event_container">
+            <div class="box">
+                {{ cour.intituleCour }}
+                
+                  
+                        <li>
+                        <a href="{% url 'cour-update' cour.pk %}">Modifier</a>
+                        <a href="{% url 'cour-delete' cour.pk %}">Supprimer</a>
+                        </li>
+                    
+            </div>
+        </div>
+        {% endfor %}
+        <div class="btn-box">
+            <a href="{% url 'cour-create' %}">Ajouter </a>
+            </a>
+        </div>
+        </div>
+    
+    </section>
+{% endblock  %}

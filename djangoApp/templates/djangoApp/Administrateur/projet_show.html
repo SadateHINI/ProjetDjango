@@ -1,0 +1,24 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+{% block content %}
+<h1>Détails du projet : {{ projet.intituleProjet }}</h1>
+<p><strong>Matière :</strong> {{ projet.matiere }}</p>
+<p><strong>Date de création :</strong> {{ projet.date_creation }}</p>
+<p><strong>Deadline :</strong> {{ projet.deadline }}</p>
+<p><strong>Description :</strong> {{ projet.description }}</p>
+<p><strong>Fichier :</strong>   <a href="{% url 'projet-download' projet.pk %}">Télécharger</a></p>
+
+
+<h2>Soumettre un devoir</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ devoir_form.as_p }}
+    <button type="submit">Soumettre</button>
+</form>
+{% endblock %}
+
+{% endblock  %}

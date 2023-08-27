@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- ... autres balises d'en-tête ... -->
+</head>
+<body>
+    <h1>Liste des Matières</h1>
+    <ul>
+        {% for matiere in liste_matiere %}
+            <li>{{ matiere.nomMatiere }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+
+  <!-- event section -->
+  <section class="event_section layout_padding">
+    {% block content %}
+      <div class="container">
+        <div class="heading_container">
+          <h3>
+
+          </h3>
+          <p>
+    
+          </p>
+        </div>
+        {% for matiere in matieres %}
+        <div class="event_container">
+          <div class="box">
+                <li>
+                {{ matiere.nomMatiere }}
+                <a href="{% url 'matiere-update' matiere.pk %}">Modifier</a>
+                <a href="{% url 'matiere-delete' matiere.pk %}">Supprimer</a>
+                </li>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="btn-box">
+            <a href="{% url 'matiere-create' %}">Ajouter </a>
+          </a>
+        </div>
+      </div>
+    {% endblock %}
+  </section>
+{% endblock  %}

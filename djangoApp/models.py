@@ -67,6 +67,21 @@ class Projet(models.Model):
     def __str__(self):
         return self.intituleProjet, self.matiere, self.fichierProjet,self.description,self.date_creation,self.deadline
 
+class Cour(models.Model):
+    # etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE, null=True,)
+    # etudiant = models.ForeignKey(User, on_delete=models.CASCADE, null=True,)
+    matiere=models.ForeignKey(Matiere,on_delete=models.CASCADE,)
+    intituleCour=models.CharField(max_length=3000)
+    fichierCour=models.FileField(upload_to='devoirs/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']), validate_file_size])
+    description=models.TextField()
+    date_creation = models.DateField(default=datetime.date.today)
+   
+
+    def __str__(self):
+        return self.intituleCour, self.matiere, self.fichierCour,self.description,self.date_creation
+
+
+
 class Devoir(models.Model):
     etudiant = models.ForeignKey(User, on_delete=models.CASCADE, null=True,)
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE,)

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Filiere, Matiere,Projet,Devoir
+from .models import User, Filiere, Matiere,Projet,Devoir,Cour
 
 
 class LoginForm(forms.Form):
@@ -75,6 +75,10 @@ class ProjetForm(forms.ModelForm):
         model=Projet
         fields=['matiere', 'intituleProjet', 'fichierProjet', 'description','deadline']
 
+class CourForm(forms.ModelForm):
+    class Meta:
+        model=Cour
+        fields=['matiere', 'intituleCour', 'fichierCour', 'description']
 
 class DevoirForm(forms.ModelForm):
     class Meta:

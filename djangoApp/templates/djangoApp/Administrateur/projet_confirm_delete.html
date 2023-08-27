@@ -1,0 +1,38 @@
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+
+<section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+              GET ONLINE COURSES FOR FREE
+            </h3>
+            <p>
+              Create your free account now and get immediate access to 100s of
+              online courses
+            </p>
+            <a href="">
+              Formulaire enseignant
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+              Login Now
+            </h5>
+            {% block content %}
+            <h1>Confirmer la suppression du projet</h1>
+            <p>Êtes-vous sûr de vouloir supprimer ce projet ?</p>
+            <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirmer la suppression</button>
+            </form>
+        {% endblock %}
+{% endblock  %}

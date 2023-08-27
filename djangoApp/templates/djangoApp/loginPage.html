@@ -1,19 +1,30 @@
-{%load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'djangoApp/css/bootstrap.css' %}">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center alert alert-danger"> Formulaire de connexion </h2>
-        {% block content%} {% endblock content %}
-    </div>
-        <div class="login_form">
-              <form method="POST">
+{% extends 'template.html' %}
+
+
+
+{% block main_content %}
+
+<section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+
+            </h3>
+            <p>
+     
+            <a href="">
+      
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+              Login Now
+            </h5>
+             <form method="POST">
                 {% csrf_token %}
                 <fieldset>
                   <div class="field">
@@ -28,13 +39,7 @@
                       placeholder="Password"
                     />
                   </div>
-                  <div class="field">
-                    <label class="label_field hidden">hidden label</label>
-                    <a class="forgot" href="#"
-                      >voulez-vous creer un compte?</a
-                    >
-                    <a class="forgot" href="">Forgotten Password?</a>
-                  </div>
+ 
                   <div class="field margin_0">
                     <input
                       class="btn login_btn "
@@ -44,9 +49,9 @@
                   </div>
                 </fieldset>
               </form>
-            </div>
-    <script src="{% static 'djangoApp/js/jquery.js' %}"></script>
-    <script src="{% static 'djangoApp/js/bootstrap.js' %}"></script>
-    <script src="{% static 'djangoApp/js/popper.js' %}"></script>
-</body>
-</html>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock  %}
